@@ -38,14 +38,6 @@ public class ExampleMixin {
 public class ExampleMod {
 	static int step, skip = 1;
 	static byte[] data;
-	static {
-		try {
-			data = FileUtils.readFileToByteArray(new File("mandelbulb.bin")); // /.minecraft/mandelbulb.bin
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 
 	private static final BlockState[] colors = {
 		Blocks.LIGHT_BLUE_CONCRETE.getDefaultState(),
@@ -126,5 +118,13 @@ public class ExampleMod {
 				});
 		dispatcher.register(command);
 		dispatcher.register(command2);
+	}
+
+	static {
+		try {
+			data = FileUtils.readFileToByteArray(new File("mandelbulb.bin")); // /.minecraft/mandelbulb.bin
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

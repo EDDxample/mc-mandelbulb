@@ -40,6 +40,17 @@ def step(z):
     z[:,2] = rn * np.cos(thetan)
     return z, r <= LIMIT
 
+def compare_and_print(v):
+    global ITERS, COLORS, CUBE, LIMIT, SIZE
+    
+    if 3 < v[0] and np.linalg.norm(v[4:7]) >= LIMIT:
+
+        color = COLORS[int(np.linalg.norm(v[1:4])) % len(COLORS)]
+        
+        r = int(np.linalg.norm(v[1:4]))
+
+        CUBE[int(v[1] + SIZE), int(v[3] + SIZE), int(v[2] + SIZE)] = getInt(r)
+
 
 space = np.mgrid[-SIZE:SIZE+1, -SIZE:SIZE+1, -SIZE:SIZE+1].reshape(3,-1).astype(np.float).T
 c = space * ZOOM / SIZE
@@ -59,16 +70,7 @@ print('100%')
 iter_pos = np.concatenate((i, space, z), 1)
 
 CUBE = np.full((255,255,255), 16, dtype=np.byte)
-def compare_and_print(v):
-    global ITERS, COLORS, CUBE, LIMIT, SIZE
-    
-    if 3 < v[0] and np.linalg.norm(v[4:7]) >= LIMIT:
 
-        color = COLORS[int(np.linalg.norm(v[1:4])) % len(COLORS)]
-        
-        r = int(np.linalg.norm(v[1:4]))
-
-        CUBE[int(v[1] + SIZE), int(v[3] + SIZE), int(v[2] + SIZE)] = getInt(r)
 np.apply_along_axis(compare_and_print, 1, iter_pos)
 
 
